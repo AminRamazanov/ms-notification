@@ -1,5 +1,6 @@
 package com.example.msnotifiction.messaging;
 
+import com.example.msnotifiction.service.NotificationService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -12,53 +13,25 @@ import static org.mockito.Mockito.verify;
 class MessageListenerTest {
 
     @Mock
-    private com.example.msnotifiction.service.NotificationService notificationService;
+    private NotificationService notificationService;
 
     @InjectMocks
     private MessageListener messageListener;
 
     @Test
-    void shouldHandleUserActivate() {
+    void shouldCallServiceMethods() {
         // When
         messageListener.userActivate(null);
-
-        // Then
-        verify(notificationService).sendUserActivationLink(null);
-    }
-
-    @Test
-    void shouldHandleRecoveryPassword() {
-        // When
         messageListener.recoveryPassword(null);
-
-        // Then
-        verify(notificationService).sendOtpForPasswordRecovery(null);
-    }
-
-    @Test
-    void shouldHandleOrderResult() {
-        // When
         messageListener.orderResult(null);
-
-        // Then
-        verify(notificationService).sendOrderResultNotification(null);
-    }
-
-    @Test
-    void shouldHandleOrderReady() {
-        // When
         messageListener.orderReady(null);
-
-        // Then
-        verify(notificationService).notifyOrderReadyForPickup(null);
-    }
-
-    @Test
-    void shouldHandleOrderCompleted() {
-        // When
         messageListener.orderCompleted(null);
 
         // Then
+        verify(notificationService).sendUserActivationLink(null);
+        verify(notificationService).sendOtpForPasswordRecovery(null);
+        verify(notificationService).sendOrderResultNotification(null);
+        verify(notificationService).notifyOrderReadyForPickup(null);
         verify(notificationService).notifyOrderCompletion(null);
     }
 }
