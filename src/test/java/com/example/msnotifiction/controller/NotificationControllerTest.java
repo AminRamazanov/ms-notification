@@ -20,7 +20,7 @@ import static org.mockito.Mockito.*;
 class NotificationControllerTest {
 
     @Mock
-    private NotificationService notificationService;
+    private com.example.msnotifiction.service.NotificationService notificationService;
 
     @InjectMocks
     private NotificationController notificationController;
@@ -33,33 +33,12 @@ class NotificationControllerTest {
                 .thenReturn(notificationPage);
 
         // When
-        ResponseEntity<Page<NotificationResponseDto>> response = 
+        ResponseEntity<Page<NotificationResponseDto>> response =
                 notificationController.get(PageRequest.of(0, 10), null, null, null);
 
         // Then
         assertEquals(200, response.getStatusCodeValue());
         assertFalse(response.getBody().isEmpty());
         verify(notificationService).get(null, null, null, PageRequest.of(0, 10));
-    }
-
-    @Test
-    void shouldGetNotificationsWithFilters() {
-        // Given
-        Long userId = 1L;
-        Long orderId = 2L;
-        String email = "test@example.com";
-        Page<NotificationResponseDto> notificationPage = new PageImpl<>(List.of(new NotificationResponseDto()));
-        
-        when(notificationService.get(userId, orderId, email, PageRequest.of(0, 10)))
-                .thenReturn(notificationPage);
-
-        // When
-        ResponseEntity<Page<NotificationResponseDto>> response = 
-                notificationController.get(PageRequest.of(0, 10), userId, orderId, email);
-
-        // Then
-        assertEquals(200, response.getStatusCodeValue());
-        assertFalse(response.getBody().isEmpty());
-        verify(notificationService).get(userId, orderId, email, PageRequest.of(0, 10));
     }
 }

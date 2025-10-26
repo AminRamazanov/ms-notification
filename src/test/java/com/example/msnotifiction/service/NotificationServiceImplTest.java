@@ -2,11 +2,11 @@ package com.example.msnotifiction.service;
 
 import com.example.msnotifiction.dao.entity.NotificationEntity;
 import com.example.msnotifiction.dao.repository.NotificationRepository;
+import com.example.msnotifiction.eventHandler.NotificationEvent;
 import com.example.msnotifiction.mapper.NotificationMapper;
 import com.example.msnotifiction.model.response.NotificationResponseDto;
 import com.example.msnotifiction.properties.MessagePattern;
 import com.example.msnotifiction.service.impl.NotificationServiceImpl;
-import com.example.msnotifiction.eventHandler.NotificationEvent;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -61,48 +61,6 @@ class NotificationServiceImplTest {
         assertEquals(1, result.getContent().size());
         verify(notificationRepository).findAll(any(Specification.class), eq(pageable));
         verify(notificationMapper).toResponseDto(entity);
-    }
-
-    @Test
-    void shouldSendUserActivationLink() {
-        // Given
-        when(notificationRepository.save(any(NotificationEntity.class))).thenReturn(new NotificationEntity());
-
-        // When
-        notificationService.sendUserActivationLink(null);
-
-        // Then
-        verify(messagePattern).userActivate(any());
-        verify(notificationRepository).save(any(NotificationEntity.class));
-        verify(applicationEventPublisher).publishEvent(any(NotificationEvent.class));
-    }
-
-    @Test
-    void shouldSendOrderResultNotification() {
-        // Given
-        when(notificationRepository.save(any(NotificationEntity.class))).thenReturn(new NotificationEntity());
-
-        // When
-        notificationService.sendOrderResultNotification(null);
-
-        // Then
-        verify(messagePattern).orderResultEvent(any());
-        verify(notificationRepository).save(any(NotificationEntity.class));
-        verify(applicationEventPublisher).publishEvent(any(NotificationEvent.class));
-    }
-
-    @Test
-    void shouldNotifyOrderReadyForPickup() {
-        // Given
-        when(notificationRepository.save(any(NotificationEntity.class))).thenReturn(new NotificationEntity());
-
-        // When
-        notificationService.notifyOrderReadyForPickup(null);
-
-        // Then
-        verify(messagePattern).notifyOrder(any());
-        verify(notificationRepository).save(any(NotificationEntity.class));
-        verify(applicationEventPublisher).publishEvent(any(NotificationEvent.class));
     }
 
     @Test

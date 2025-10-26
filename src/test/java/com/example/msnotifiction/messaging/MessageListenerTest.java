@@ -12,7 +12,7 @@ import static org.mockito.Mockito.verify;
 class MessageListenerTest {
 
     @Mock
-    private NotificationService notificationService;
+    private com.example.msnotifiction.service.NotificationService notificationService;
 
     @InjectMocks
     private MessageListener messageListener;
