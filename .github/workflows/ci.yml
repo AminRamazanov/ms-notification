@@ -1,4 +1,4 @@
-name: CI - Build & Test ms-notification
+name: CI - Build & Test ms-notifiction
 
 on:
   push:
@@ -24,10 +24,10 @@ jobs:
         run: chmod +x gradlew
 
       - name: Build with Gradle
-        run: ./gradlew :ms-notification:clean :ms-notification:build -x test
+        run: ./gradlew clean build -x test
 
       - name: Run tests
-        run: ./gradlew :ms-notification:test
+        run: ./gradlew test
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -35,16 +35,16 @@ jobs:
       - name: Log in to Docker Hub
         uses: docker/login-action@v3
         with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
           context: .
-          file: ./ms-notification/Dockerfile
+          file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/ms-notification:dev
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/ms-notifiction:dev
 
       - name: Verify image pushed
-        run: docker pull ${{ secrets.DOCKER_USERNAME }}/ms-notification:dev
+        run: docker pull ${{ secrets.DOCKERHUB_USERNAME }}/ms-notifiction:dev
