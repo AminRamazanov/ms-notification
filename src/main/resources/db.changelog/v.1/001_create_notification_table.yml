@@ -1,0 +1,43 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-notifications-table
+      author: Amin Ramazanov
+      changes:
+        - createTable:
+            tableName: notifications
+            columns:
+              - column:
+                  name: id
+                  type: BIGSERIAL
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: user_id
+                  type: BIGINT
+              - column:
+                  name: order_id
+                  type: BIGINT
+              - column:
+                  name: email
+                  type: VARCHAR(255)
+              - column:
+                  name: event_id
+                  type: UUID
+              - column:
+                  name: subject
+                  type: VARCHAR(255)
+              - column:
+                  name: text
+                  type: TEXT
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  defaultValueComputed: CURRENT_TIMESTAMP
+              - column:
+                  name: html
+                  type: BOOLEAN
+              - column:
+                  name: processed
+                  type: BOOLEAN
+                  defaultValueBoolean: false
