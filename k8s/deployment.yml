@@ -1,0 +1,103 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms-notification
+  namespace: my-project
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ms-notification
+  template:
+    metadata:
+      labels:
+        app: ms-notification
+    spec:
+      containers:
+        - name: ms-notification
+          image: aminramazanov/ms-notification:dev
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8082
+          env:
+            # Database
+            - name: DB_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: ms-notification-config
+                  key: DB_URL
+            - name: DB_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: ms-notification-secret
+                  key: DB_USERNAME
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: ms-notification-secret
+                  key: DB_PASSWORD
+
+            # RabbitMQ
+            - name: RABBIT_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: ms-notification-config
+                  key: RABBIT_HOST
+            - name: RABBIT_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: ms-notification-config
+                  key: RABBIT_PORT
+            - name: RABBIT_USERNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: ms-notification-config
+                  key: RABBIT_USERNAME
+            - name: RABBIT_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: ms-notification-config
+                  key: RABBIT_PASSWORD
+
+            # Mail
+            - name: SPRING_MAIL_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: ms-notification-config
+                  key: SPRING_MAIL_HOST
+            - name: SPRING_MAIL_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: ms-notification-config
+                  key: SPRING_MAIL_PORT
+            - name: SPRING_MAIL_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: ms-notification-secret
+                  key: SPRING_MAIL_USERNAME
+            - name: SPRING_MAIL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: ms-notification-secret
+                  key: SPRING_MAIL_PASSWORD
+
+            # Activation Link
+            - name: ACTIVATE_LINK
+              valueFrom:
+                configMapKeyRef:
+                  name: ms-notification-config
+                  key: ACTIVATE_LINK
+
+            # Secret Key
+            - name: SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: ms-notification-secret
+                  key: SECRET_KEY
+
+            # Server Port
+            - name: SERVER_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: ms-notification-config
+                  key: SERVER_PORT

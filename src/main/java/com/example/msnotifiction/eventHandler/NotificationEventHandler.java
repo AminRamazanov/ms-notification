@@ -25,7 +25,7 @@ public class NotificationEventHandler {
         log.info("Handling NotificationCreatedEvent for id={}", event.notificationId());
 
         NotificationEntity entity = notificationRepository.findById(event.notificationId())
-                .orElseThrow(()-> new NotFoundException("⚠️ Notification not found for id={}", event.notificationId()));
+                .orElseThrow(()-> new NotFoundException("Notification not found for id={}", event.notificationId()));
 
         try {
             notificationUtil.sendSingleNotification(entity);

@@ -3,9 +3,9 @@ spring:
     name: ms-notification
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/notification
-    username: user
-    password: user123
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
     driver-class-name: org.postgresql.Driver
 
   jpa:
@@ -19,10 +19,10 @@ spring:
     enabled: true
 
   rabbitmq:
-    host: localhost
-    port: 5672
-    username: guest
-    password: guest
+    host: ${RABBIT_HOST}
+    port: ${RABBIT_PORT}
+    username: ${RABBIT_USERNAME}
+    password: ${RABBIT_PASSWORD}
 
   mail:
     host: ${SPRING_MAIL_HOST}
@@ -54,7 +54,7 @@ management:
     readinessState:
       enabled: true
 
-secret-key: U2ck983KreAHe3F14vPguhVBAa4KixROni4UJUEylE4=
+secret-key: ${SECRET_KEY}
 
 server:
-  port: 8082
+  port: ${SERVER_PORT}
