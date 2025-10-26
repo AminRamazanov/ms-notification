@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: ms-notification
-          image: aminramazanov/ms-notification:dev
+          image: aminramazanov/ms-notifiction:dev
           imagePullPolicy: Always
           ports:
             - containerPort: 8082
@@ -58,6 +58,18 @@ spec:
                 configMapKeyRef:
                   name: ms-notification-config
                   key: RABBIT_PASSWORD
+
+            # Redis
+            - name: REDIS_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: ms-notification-config
+                  key: REDIS_HOST
+            - name: REDIS_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: ms-notification-config
+                  key: REDIS_PORT
 
             # Mail
             - name: SPRING_MAIL_HOST

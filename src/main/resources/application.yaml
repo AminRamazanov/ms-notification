@@ -35,6 +35,10 @@ spring:
           auth: true
           starttls:
             enable: true
+  data:
+    redis:
+      port: ${REDIS_PORT}
+      host: ${REDIS_HOST}
 
 activateLink: ${ACTIVATE_LINK}
 
