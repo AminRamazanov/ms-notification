@@ -22,7 +22,7 @@ public class NotificationEventHandler {
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
     @Async
     public void handle(NotificationEvent event) {
-        log.info("📨 Handling NotificationCreatedEvent for id={}", event.notificationId());
+        log.info("Handling NotificationCreatedEvent for id={}", event.notificationId());
 
         NotificationEntity entity = notificationRepository.findById(event.notificationId())
                 .orElseThrow(()-> new NotFoundException("⚠️ Notification not found for id={}", event.notificationId()));
